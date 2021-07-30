@@ -1,0 +1,14 @@
+﻿apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: ImagesInNamespace
+metadata:
+  name: busybox-in-ciao
+spec:
+  match:
+    kinds:
+      - apiGroups:
+          - ''
+        kinds:
+          - Pod
+  parameters:
+    image_regex: busybox
+    namespaces: ciao

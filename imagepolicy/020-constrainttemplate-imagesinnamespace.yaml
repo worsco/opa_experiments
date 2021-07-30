@@ -1,0 +1,36 @@
+﻿apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: imagesinnamespace
+spec:
+  crd:
+    spec:
+      names:
+        kind: ImagesInNamespace
+      validation:
+        openAPIV3Schema:
+          properties:
+            image_regex:
+              type: string
+            namespaces:
+              type: string
+  targets:
+    - rego: |
+        package imagesinnamespace
+
+        violation[{"msg": msg, "details": {}}] {
+            images := input_images[_]
+            image_regex := input.parameters.image_regex
+            regex.match(image_regex, images)
+            namespace := input.parameters.namespaces
+            namespace != input.review.object.metadata.namespace
+            msg := sprintf("images : %v can only be created in namespace %v", [images, namespace])
+        }
+
+        input_images[c] {
+            c := input.review.object.spec.containers[_].image
+        }
+        input_images[c] {
+            c := input.review.object.spec.initContainers[_].image
+        }
+      target: admission.k8s.gatekeeper.sh

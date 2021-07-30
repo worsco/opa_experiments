@@ -1,0 +1,23 @@
+apiVersion: operator.gatekeeper.sh/v1alpha1
+kind: Gatekeeper
+metadata:
+  labels:
+    app: gatekeeper
+  name: gatekeeper
+spec:
+  audit:
+    emitAuditEvents: Disabled
+    logLevel: INFO
+    replicas: 1
+    resources:
+      limits:
+        cpu: 300m
+        memory: 800Mi
+      requests:
+        cpu: 300m
+        memory: 800Mi
+  mutatingWebhook: Disabled
+  validatingWebhook: Enabled
+  webhook:
+    logLevel: INFO
+    replicas: 1
