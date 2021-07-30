@@ -1,5 +1,5 @@
 # OPA Experiments
 
-## impagepolicy
+## /imagepolicy directory
 
 An experiment with an image policy in OPA.
