@@ -4,7 +4,7 @@ set -x
 
 oc apply -f 000-gatekeeper-cr-scw.yaml
 
-oc apply -f 000-namespace-ciao.yaml
+oc apply -f 005-namespace-ciao.yaml
 oc apply -f 010-namespace-ciao2.yaml
 
 oc apply -f 015-deployment-ciao.yaml
